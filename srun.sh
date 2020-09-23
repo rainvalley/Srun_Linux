@@ -1,13 +1,13 @@
 #!/bin/bash
-Stu_No=""
-Stu_Passwd=""
+Stu_No="201916050318"
+Stu_Passwd="aWORD1234"
 URL="http://172.16.154.130:69/cgi-bin/srun_portal"
 Encrypted_No="{SRUN3}\r\n"
 Encrypted_Passwd=""
 
-for ((i=0;i<${#Stu_No};i++))
+for i in `seq ${#Stu_No}`
 do
-    letter=$(printf "%d" "'${Stu_No:$i:1}")
+    letter=$(printf "%d" "'${Stu_No:$i-1:1}")
     let letter=letter+4
     letter=$(printf \\x`printf %x $letter`)
     result+=$letter
@@ -15,8 +15,9 @@ done
 Encrypted_No=$Encrypted_No$result
 
 
-for ((i=0;i<${#Stu_Passwd};i++))
+for i in `seq ${#Stu_No}`
 do
+    i=$(($i-1))
     letter=$(printf "%d" "'${Stu_Passwd:$i:1}")
     if test $i -eq 0
     then
@@ -28,7 +29,7 @@ do
     _h=$((($ki>>4&0x0f)+0x63))
     _l=$(printf \\x`printf %x $_l`)
     _h=$(printf \\x`printf %x $_h`)
-    if  test $[$i%2] -eq 1
+    if  test $(($i%2)) -eq 1
     then
         result=$_h$_l
     else
