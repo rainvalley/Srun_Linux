@@ -10,12 +10,11 @@ do
     letter=$(printf "%d" "'${Stu_No:$i-1:1}")
     let letter=letter+4
     letter=$(printf \\x`printf %x $letter`)
-    result+=$letter
+    Encrypted_No=$Encrypted_No$letter
 done
-Encrypted_No=$Encrypted_No$result
+Encrypted_No=${Encrypted_No%?}
 
-
-for i in `seq ${#Stu_No}`
+for i in `seq ${#Stu_Passwd}`
 do
     i=$(($i-1))
     letter=$(printf "%d" "'${Stu_Passwd:$i:1}")
@@ -35,7 +34,6 @@ do
     else
         result=$_l$_h
     fi
-    Encrypted_Passwd+=$result
+    Encrypted_Passwd=$Encrypted_Passwd$result
 done
-
-curl -X POST --data-urlencode "username=$Encrypted_No" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencode "n=117" --data-urlencode "mbytes=0" --data-urlencode "minutes=0" --data-urlencode "drop=0" --data-urlencode "pop=1" --data-urlencode "mac=02:00:00:00:00:00" $URL
+curl -X POST --data-urlencode "username={SRUN3}\r\n645=5:49475<" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencecho ""
