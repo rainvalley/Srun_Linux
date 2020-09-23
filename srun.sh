@@ -1,6 +1,6 @@
 #!/bin/bash
-Stu_No="201916050318"
-Stu_Passwd="aWORD1234"
+Stu_No=$1
+Stu_Passwd=$2
 URL="http://172.16.154.130:69/cgi-bin/srun_portal"
 Encrypted_No="{SRUN3}\r\n"
 Encrypted_Passwd=""
