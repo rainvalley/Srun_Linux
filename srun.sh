@@ -36,4 +36,4 @@ do
     fi
     Encrypted_Passwd=$Encrypted_Passwd$result
 done
-curl -X POST --data-urlencode "username=$Encrypted_No" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencecho ""
+curl -X POST --data-urlencode "username=$Encrypted_No" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencode "n=117" --data-urlencode "mbytes=0" --data-urlencode "minutes=0" --data-urlencode "drop=0" --data-urlencode "pop=1" --data-urlencode "mac=02:00:00:00:00:00" $URL
