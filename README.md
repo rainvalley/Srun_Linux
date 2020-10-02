@@ -4,7 +4,7 @@
 * 将脚本加入Crontab食用更佳
 
 # 食用手册
-* 下载脚本：`wget https://raw.githubusercontent.com/rainvalley/Srun_Linux/master/srun.sh`
+* 下载脚本：`wget https://raw.githubusercontent.com/rainvalley/Srun_Linux/master/srun.sh`，如无法下载请使用`wget https://imgs.raincorn.top/file/srun.sh`
 * 运行：`bash srun.sh username passwd`，username与passwd需要修改为您的账号与密码，例如`bash srun.sh 201916660212 123456`
 * 如需开机自启，在crontab中编写`@reboot bash srun.sh username passwd`即可
 
