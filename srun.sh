@@ -7,12 +7,11 @@ Encrypted_Passwd=""
 
 for i in `seq ${#Stu_No}`
 do
-    letter=$(printf "%d" "'${Stu_No:$i-1:1}")
+    letter=$(printf "%d" "'${Stu_No:$(($i-1)):1}")
     let letter=letter+4
     letter=$(printf \\x`printf %x $letter`)
     Encrypted_No=$Encrypted_No$letter
 done
-Encrypted_No=${Encrypted_No%?}
 
 for i in `seq ${#Stu_Passwd}`
 do
@@ -37,3 +36,4 @@ do
     Encrypted_Passwd=$Encrypted_Passwd$result
 done
 curl -X POST --data-urlencode "username=$Encrypted_No" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencode "n=117" --data-urlencode "mbytes=0" --data-urlencode "minutes=0" --data-urlencode "drop=0" --data-urlencode "pop=1" --data-urlencode "mac=02:00:00:00:00:00" $URL
+echo ""
