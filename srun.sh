@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/ash
 Stu_No=$1
 Stu_Passwd=$2
 URL="http://172.16.154.130:69/cgi-bin/srun_portal"
@@ -35,5 +35,20 @@ do
     fi
     Encrypted_Passwd=$Encrypted_Passwd$result
 done
-curl -X POST --data-urlencode "username=$Encrypted_No" --data-urlencode "password=$Encrypted_Passwd" --data-urlencode "ac_id=2" --data-urlencode "action=login" --data-urlencode "type=3" --data-urlencode "n=117" --data-urlencode "mbytes=0" --data-urlencode "minutes=0" --data-urlencode "drop=0" --data-urlencode "pop=1" --data-urlencode "mac=02:00:00:00:00:00" $URL
-echo ""
+
+urlencode() {
+    # urlencode <string>
+    local LANG=C
+    for i in `seq ${#1}`
+    do
+        local c="${1:$(($i-1)):1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            *) printf '%%%02X' "'$c" ;; 
+        esac
+    done
+}
+
+#echo `urlencode $Encrypted_No`
+#echo `urlencode $Encrypted_Passwd`
+wget -qO- --post-data=$(printf "username=";urlencode $Encrypted_No;printf "&password=";urlencode $Encrypted_Passwd;printf "&ac_id=1&action=login&type=3&n=117&mbytes=0&minutes=0&drop=0&pop=1&mac=02:00:00:00:00:00") $URL
