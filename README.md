@@ -1,16 +1,32 @@
 # 食用之前
-* 撰写本脚本的初衷是为了可以在路由器上运行Srun，您只需要获取到路由器的Telnet/SSH权限即可运行该脚本
-* 本脚本已于Padavan和Openwrt固件的Busybox测试成功
-* 更新使用wget替换curl,节约闪存
-* 将脚本加入Crontab食用更佳
+* 撰写本脚本的初衷是为了可以在路由器上运行 Srun ，您只需要获取到路由器的 Telnet/SSH 权限即可运行该脚本
+* 本脚本已于 Padavan 和 Openwrt 固件的 Busybox 测试成功
+* 更新使用 wget 替换 curl ,节约闪存
+* 将脚本加入 Crontab 食用更佳
 * 更详细的食用手册可以访问：https://blog.raincorn.top/2020/10/02/srun_login/
+* 已实现掉线自动登录，检测频率 1 分钟（受限于 crontab）
+* 掉线检测原理：执行脚本时用 wget 访问 generate_204 页面，如果掉线，则会被深澜系统重定向到登录页。对 wget 返回结果判断是否为空即可。
 
 # 食用手册
-* 下载脚本：`wget https://raw.githubusercontent.com/rainvalley/Srun_Linux/master/srun.sh`，如无法下载请使用`wget https://imgs.raincorn.top/file/srun.sh`（镜像网站，可能不会及时更新）
-* 运行：`bash srun.sh username passwd`，username与passwd需要修改为您的账号与密码，例如`ash srun.sh 201916660212 123456`
-* 我偷懒直接把脚本加入了crontab避免掉线，每分钟登陆一次`*/1 * * * * ash /etc/storage/srun.sh username passwd`
+* 下载脚本：`wget https://github.com/CHxCOOH/Srun_Linux/raw/master/srun.sh`，如无法下载可在其他设备上下载后，使用 sftp 等方式传入
+* 授予脚本可执行权限：`chmod +x ./srun.sh`
+* 运行：`srun.sh username passwd`，username与passwd需要修改为您的账号与密码，例如 `./srun.sh 201916660212 123456`
+* 使用 crontab 计划任务来每分钟检测在线状态，如果掉线则自动重新登录，并将 log 写入 `~/login.log`
+
+```bash
+crontab -e
+```
+
+```
+* * * * * /root/srun.sh 201916660212 123456
+# /root/srun.sh自行修改为脚本路径
+```
+
+* 如有需要，可自行修改脚本，关闭 log。
 
 # 其它
+
 * 我的路由器是斐讯K2 PDCN固件，29.9软妹币购于拼爹爹
 * 路由器固件一般会在重启后删除缓存，请将脚本储存于`/etc/storage`（PDCN固件）
-* ~~准备加入下线自动连接，敬请期待~~
+* ~~准备加入下线自动连接，敬请期待~~（已加入）
+* 已在 OpenWrt 完成测试，正常情况下约 18h 下线一次。如果频繁掉线，可能是触发了多设备检测。~~等待进一步测试~~
